@@ -107,13 +107,20 @@ namespace PhoneScraper
             {
                 // Phone name - we already have this
                 // string phoneName = htmlDoc.DocumentNode.SelectSingleNode("//h1[@class='specs-phone-name-title']").InnerHtml;
-                
-                phone.UsbType = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='usb']").InnerHtml;
-                phone.Status = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='status']").InnerHtml;
-                phone.Os = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='os']").InnerHtml;
-                phone.Price = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='price']").InnerHtml;
-                phone.Wlan = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='wlan']").InnerHtml;
 
+                try
+                {
+                    phone.UsbType = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='usb']").InnerHtml;
+                    phone.Status = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='status']").InnerHtml;
+                    phone.Os = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='os']").InnerHtml;
+                    phone.Price = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='price']").InnerHtml;
+                    phone.Wlan = htmlDoc.DocumentNode.SelectSingleNode("//td[@data-spec='wlan']").InnerHtml;
+                }
+                catch (NullReferenceException)
+                {
+                    phone.UsbType = "NullReferenceException";
+                }
+                
                 db.Phones.Update(phone);
 
                 db.SaveChangesAsync();
